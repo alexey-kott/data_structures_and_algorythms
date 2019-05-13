@@ -21,11 +21,48 @@ def get_rook_attack_fields(v: str, h: Union[str, int]) -> List[str]:
     return coords
 
 
-def get_bishop_attack_fields(v: str, h: Union[str, int]) -> List[str]:
+def get_bishop_attack_fields(v: str, h: int) -> List[str]:
+    # TODO: безусловно, этот копипаст можно как-то унифицировать (эм, использовать вектора?)
     coords = []
-    # for i in range(ord(v))
+    cur_vertical = ord(v)
+    cur_horizontal = h
+    while cur_vertical < ord('h') and cur_horizontal < 9:
+        cur_vertical += 1
+        cur_horizontal += 1
+        field = f"{chr(cur_vertical)}{cur_horizontal}"
+        coords.append(field)
+
+    cur_vertical = ord(v)
+    cur_horizontal = h
+    while cur_vertical >= ord('a') and cur_horizontal > 1:
+        cur_vertical -= 1
+        cur_horizontal -= 1
+        field = f"{chr(cur_vertical)}{cur_horizontal}"
+        coords.append(field)
+
+    cur_vertical = ord(v)
+    cur_horizontal = h
+    while cur_vertical > ord('a') and cur_horizontal < 9:
+        cur_vertical -= 1
+        cur_horizontal += 1
+        field = f"{chr(cur_vertical)}{cur_horizontal}"
+        coords.append(field)
+
+    cur_vertical = ord(v)
+    cur_horizontal = h
+    while cur_vertical < ord('i') and cur_horizontal > 1:
+        cur_vertical += 1
+        cur_horizontal -= 1
+        field = f"{chr(cur_vertical)}{cur_horizontal}"
+        coords.append(field)
 
     return coords
+
+
+def get_knight_fields(v: str, h: Union[str, int]) -> Set[str]:
+    fields = []
+
+    return set(fields)
 
 
 def get_queen_fields(v: str, h: Union[str, int]) -> Set[str]:
@@ -46,13 +83,15 @@ def get_pawn_attack_fields(v: str, h: Union[str, int]) -> Set[str]:
 def get_fields_under_attack(piece: str, field: str) -> List[str]:
     v, h = list(field)
     if piece == 'queen':
-        fields = get_queen_fields(v, h)
+        fields = get_queen_fields(v, int(h))
     elif piece == 'rook':
-        fields = get_rook_attack_fields(v, h)
+        fields = get_rook_attack_fields(v, int(h))
     elif piece == 'bishop':
-        fields = get_bishop_attack_fields(v, h)
+        fields = get_bishop_attack_fields(v, int(h))
+    elif piece == 'knight':
+        fields = get_knight_attack_fields(v, int(h))
     else:
-        fields = get_pawn_attack_fields(v, h)
+        fields = get_pawn_attack_fields(v, int(h))
 
     return sorted(fields)
 
@@ -62,7 +101,8 @@ def main():
 
     queen_coords, rook_coords, knight_coords = input_data.lower().split(' ')
     fields = get_fields_under_attack('queen', queen_coords)
-    print(fields)
+    fields = get_fields_under_attack('rook', rook_coords)
+    fields = get_fields_under_attack('knight', knight_coords)
 
 
 if __name__ == "__main__":
