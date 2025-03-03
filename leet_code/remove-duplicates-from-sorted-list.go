@@ -29,7 +29,7 @@ func inputLinkedList(nums []int) LinkedList {
 func deleteDuplicates(head *ListNode) *ListNode {
 	var node = head
 	for {
-		if node.Next == nil {
+		if node == nil {
 			break
 		}
 		if node.Val == node.Next.Val {

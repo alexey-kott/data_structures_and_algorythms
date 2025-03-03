@@ -73,6 +73,10 @@ def get_queen_fields(v: str, h: Union[str, int]) -> Set[str]:
     return set(queen_fields)
 
 
+def get_knight_attack_fields(v: str, h: Union[str, int]) -> Set[str]:
+    pass
+
+
 def get_pawn_attack_fields(v: str, h: Union[str, int]) -> Set[str]:
     coords = []
     # TODO: implement this function
